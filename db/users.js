@@ -5,7 +5,7 @@ const users = [
   { id: '2', username: 'joe', password: 'password', name: 'Joe Davis' },
 ];
 
-module.exports.findById = (id, done) => {
+module.exports.findByUserId = (id, done) => {
   for (let i = 0, len = users.length; i < len; i++) {
     if (users[i].id === id) return done(null, users[i]);
   }

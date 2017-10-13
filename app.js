@@ -8,6 +8,8 @@ const session = require('express-session');
 const passport = require('passport');
 const routes = require('./routes');
 
+const port = process.env.PORT || 3000;
+
 // Express configuration
 const app = express();
 app.set('view engine', 'ejs');
@@ -28,11 +30,18 @@ app.post('/login', routes.site.login);
 app.get('/logout', routes.site.logout);
 app.get('/account', routes.site.account);
 
-app.get('/dialog/authorize', routes.oauth2.authorization);
-app.post('/dialog/authorize/decision', routes.oauth2.decision);
-app.post('/oauth/token', routes.oauth2.token);
+app.get('/auth', routes.oauth2.authorization);
+app.post('/auth/decision', routes.oauth2.decision);
+app.post('/token', routes.oauth2.token);
 
 app.get('/api/userinfo', routes.user.info);
 app.get('/api/clientinfo', routes.client.info);
 
-app.listen(process.env.PORT || 3000);
+app.listen(port);
+console.log(
+`Listening on port ${port}!
+Auth URL    : http://localhost:${port}/auth
+Token URL   : http://localhost:${port}/token
+ClientID    : xyz123
+ClientSecret: secret
+`);
